@@ -1,0 +1,77 @@
+{
+  "name": "@aarepuu/create-ts-api",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "aarepuu/ts-api-base",
+  "author": "Aare Puussaar",
+  "license": "MIT",
+  "scripts": {
+    "build-ts": "tsc",
+    "build": "npm run lint && npm run build-ts",
+    "lint": "npx tsc --noEmit",
+    "coverage": "jest --coverage",
+    "preversion": "npm test -s && npm run build && git add dist",
+    "prettier": "prettier --write '**/*.{js,ts,tsx,json,css,md}'",
+    "start": "node -r dotenv/config dist/index.js",
+    "test": "jest",
+    "dev": "NODE_ENV=development nodemon"
+  },
+  "keywords": [],
+  "engines": {
+    "node": "12.x.x",
+    "npm": "6.x.x"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "hapi-pino": "^8.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.4",
+    "pg": "^8.2.1",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/dotenv": "^8.2.0",
+    "@types/hapi__hapi": "^19.0.2",
+    "@types/jest": "^24.9.1",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/node": "^12.12.36",
+    "jest": "^26.2.0",
+    "lint-staged": "^9.5.0",
+    "nodemon": "^2.0.4",
+    "prettier": "^1.19.1",
+    "ts-jest": "^26.2.0",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3",
+    "yorkie": "^2.0.0"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  }
+}
