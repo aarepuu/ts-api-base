@@ -17,7 +17,7 @@ export async function init(
   connectorConfigs: ConnectorConfigurations
 ): Promise<any> {
   // register/load connector
-  // register plugins for connector
+  // TODO: setup connector plugins
   const connectorType: string = serverConfigs.connector
 
   const connectorInterface: ConnectorInterface = require('./providers/' +

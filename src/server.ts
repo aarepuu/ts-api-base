@@ -23,8 +23,6 @@ export async function init(
       server.realm.modifiers.route.prefix = configs.routePrefix
     }
 
-    // TODO: setup connector plugins
-
     //  Setup Hapi Plugins
     const plugins: Array<string> = configs.plugins
     const pluginOptions = {
@@ -51,7 +49,7 @@ export async function init(
       )
       route.register(server, configs, connector)
     })
-    // console.log('Routes registered successfully.')
+    console.log('Routes registered successfully.')
     return server
   } catch (err) {
     console.log('Error starting server: ', err)
