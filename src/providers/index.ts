@@ -1,15 +1,4 @@
-// TODO: is this needed for init
-// import { config } from 'dotenv'
-import {
-  ConnectorConfigurations
-  // ServerConfigurations
-} from '../configurations'
-// config({ path: '.env' })
-
-// export interface ConnectorOptions {
-//   serverConfigs: ServerConfigurations
-//   connectorConfigs: ConnectorConfigurations
-// }
+import { ConnectorConfigurations } from '../configurations'
 
 export interface ConnectorInterface {
   register(config?: ConnectorConfigurations): Promise<any>
