@@ -17,4 +17,11 @@ export default class HelloController {
       .response({ meta: { success: true, messages: [] }, data: greetings })
       .code(200)
   }
+
+  public async getSecretGreetings(request: Request, h: ResponseToolkit) {
+    const greetings: Hello = { greetings: 'Hello Secrets' }
+    return h
+      .response({ meta: { success: true, messages: [] }, data: greetings })
+      .code(200)
+  }
 }

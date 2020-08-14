@@ -1,9 +1,13 @@
 import { Server } from '@hapi/hapi'
-import { ServerConfigurations } from '../configurations'
+import {
+  ServerConfigurations,
+  ConnectorConfigurations
+} from '../configurations'
 
 export interface PluginOptions {
-  connector: any
   serverConfigs: ServerConfigurations
+  connectorConfigs: ConnectorConfigurations
+  connector?: any
 }
 
 export interface Plugin {

@@ -11,7 +11,7 @@ import * as Connector from './connector'
     // TODO: check if connector init is successful
     const connector = await Connector.init(serverConfigs, connectorConfigs)
     // start server
-    const server = await Server.init(serverConfigs, connector)
+    const server = await Server.init(serverConfigs, connectorConfigs, connector)
     await server.start()
     console.log(`Server running @ ${server.info.uri}`)
   } catch (error) {

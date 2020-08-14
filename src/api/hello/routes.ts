@@ -1,8 +1,6 @@
 import { Server } from '@hapi/hapi'
-// import * as Joi from 'joi'
 import HelloController from './hello-controller'
-// import { DetectionModel } from './detection'
-// import { Connector } from '../../connector'
+import * as HelloValidator from './hello-validator'
 import { ServerConfigurations } from '../../configurations'
 
 export default function(
@@ -18,8 +16,23 @@ export default function(
     path: '/hello',
     options: {
       handler: helloController.getGreetings,
+      auth: false,
       tags: ['api', 'hello'],
       description: 'Get greetings'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/hello/restricted',
+    options: {
+      handler: helloController.getSecretGreetings,
+      auth: 'jwt',
+      tags: ['api', 'hello', 'auth'],
+      description: 'Get secret greetings',
+      validate: {
+        headers: HelloValidator.jwtValidator
+      }
     }
   })
 }

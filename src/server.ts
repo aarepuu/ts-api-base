@@ -1,10 +1,11 @@
 import { Server } from '@hapi/hapi'
 import { Plugin } from './plugins'
 import { Route } from './api'
-import { ServerConfigurations } from './configurations'
+import { ServerConfigurations, ConnectorConfigurations } from './configurations'
 
 export async function init(
   configs: ServerConfigurations,
+  conConfigs: ConnectorConfigurations,
   connector: any
 ): Promise<Server> {
   try {
@@ -26,8 +27,9 @@ export async function init(
     //  Setup Hapi Plugins
     const plugins: Array<string> = configs.plugins
     const pluginOptions = {
-      connector: connector,
-      serverConfigs: configs
+      serverConfigs: configs,
+      connectorConfigs: conConfigs,
+      connector: connector
     }
     let pluginPromises: Promise<any>[] = []
     plugins.forEach((pluginName: string) => {
@@ -49,7 +51,7 @@ export async function init(
       )
       route.register(server, configs, connector)
     })
-    console.log('Routes registered successfully.')
+    console.log('All routes registered successfully.')
     return server
   } catch (err) {
     console.log('Error starting server: ', err)

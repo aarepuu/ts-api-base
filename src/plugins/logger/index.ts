@@ -21,7 +21,7 @@ export default (): Plugin => {
   return {
     register,
     info: () => {
-      return { name: 'Pino Logger', version: '8.0.1' }
+      return { name: 'Pino Logger', version: '1.0.0' }
     }
   }
 }
