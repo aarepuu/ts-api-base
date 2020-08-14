@@ -13,10 +13,10 @@ This project was setup with [aarepuu/ts-api-base](https://github.com/ts-api-base
 
 **API Features**
 
-- Uses `.env` variable to specify connector provider
+- Uses `.env` variable to specify connector provider (comes with TypeORM and Knex connector providers)
 - Uses `.env` variable to load hapi plugins (comes with Pino logger and JWT Authentication plugin)
 - Uses `.env` variable to load authentication controller
-- TypeORM and Knex connector providers
+- Uses [JWT authentication](https://github.com/dwyl/hapi-auth-jwt2)
 
 ## Dev Commands
 
@@ -41,7 +41,7 @@ npm run coverage
 
 ## Usage/Extending
 
-Add your own API endpoints based on the [api/hello](api/hello) example according to the connector of choice. For JWT authentication you need to implement your own auth controller based on the [api/auth](api/auth) example according to the connector of choice (using `auth` interface). Template uses `dummy` connector and auth. See more about implementation of [typeorm](https://typeorm.io) and [knex](http://knexjs.org/).
+Add your own API endpoints based on the [api/hello](src/api/hello) example according to the connector of choice. For JWT authentication you need to implement your own auth controller based on the [api/auth](src/api/auth) example according to the connector of choice (using `auth` interface). Template uses `dummy` connector and auth. See more about implementation of [typeorm](https://typeorm.io) and [knex](http://knexjs.org/).
 
 ## Variables
 
