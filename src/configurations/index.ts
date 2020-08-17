@@ -31,7 +31,7 @@ const server: ServerConfigurations = {
   debugLogging: isDevMode,
   plugins: String(process.env.PLUGINS || 'logger,jwt-auth').split(','),
   routes: String(process.env.ROUTES || 'hello').split(','),
-  jwtSecret: process.env.JWT_SECRET || 'your-secret-whatever',
+  jwtSecret: process.env.JWT_SECRET || 'never-share-secrets',
   jwtExpiration: process.env.JWT_EXP || '1h',
   routePrefix: process.env.ROUTE_PREFIX || '',
   connector: process.env.CONNECTOR || 'dummy'
