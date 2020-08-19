@@ -10,15 +10,10 @@ const register = async (
   try {
     const connectorConfig = options.connectorConfigs
     const serverConfig = options.serverConfigs
-    // load custom auth controller
+    // load custom auth provider
     const authProvider: Auth = require('../../api/' +
-      connectorConfig.authController).default()
+      connectorConfig.authProvider).default()
 
-    if (serverConfig.debugLogging) {
-      console.log(
-        `Your DEV JWT token is ${authProvider.generateToken(serverConfig)}`
-      )
-    }
     await server.register(require('hapi-auth-jwt2'))
 
     return setAuthStrategy(server, {

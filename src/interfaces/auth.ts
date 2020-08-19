@@ -5,7 +5,9 @@ export interface Auth {
   validateUser(
     decoded: any,
     request: Request,
-    h: ResponseToolkit
+    h: ResponseToolkit,
+    user?: any,
+    connector?: any
   ): Promise<{ isValid: Boolean }>
-  generateToken(configs: ServerConfigurations, user?: any): string
+  generateToken(configs: ServerConfigurations, session?: any): string
 }
