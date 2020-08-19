@@ -43,6 +43,17 @@ npm run coverage
 
 Add your own API endpoints based on the [api/hello](src/api/hello) example according to the connector of choice. For JWT authentication you need to implement your own auth controller based on the [api/auth](src/api/auth) example according to the connector of choice (using `auth` interface). Template uses `dummy` connector and auth. See more about implementation of [typeorm](https://typeorm.io) and [knex](http://knexjs.org/).
 
+### 2FA Authentication
+
+Template also includes an example of 2FA leveraging [otplib](https://github.com/yeojz/otplib) that can be used with Google Authenticator application on phone or tablet.
+
+2FA adds additional parameter of `verified` to JWT token. When 2FA is successfully verified using a verification code from the app, JWT token is updated to `{verified: true}` that can be checked on restricted routes:
+
+```js
+if (!request.auth.credentials.verified)
+  return unauthorized('Missing two-factor verification')
+```
+
 ## Variables
 
 The setup of the API is done using set of `.env` variables

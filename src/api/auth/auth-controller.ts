@@ -66,6 +66,7 @@ export default class AuthController {
         })
         .code(206)
     }
+    // TODO: use status and expire to set cookie expiration
     return h.response({ status: { verified: false }, token }).code(206)
   }
 
