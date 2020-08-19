@@ -1,4 +1,6 @@
-import { Request, ResponseToolkit } from '@hapi/hapi'
+import { ResponseToolkit } from '@hapi/hapi'
+import { unauthorized } from '@hapi/boom'
+import { CustomRequest } from '../../interfaces/request'
 import Hello from './hello-model'
 import { ServerConfigurations } from '../../configurations'
 
@@ -18,7 +20,11 @@ export default class HelloController {
       .code(200)
   }
 
-  public async getSecretGreetings(request: Request, h: ResponseToolkit) {
+  public async getSecretGreetings(request: CustomRequest, h: ResponseToolkit) {
+    // needed for all restricted routes
+    if (!request.auth.credentials.verified)
+      return unauthorized('Missing two-factor verification')
+
     const greetings: Hello = { greetings: 'Hello Secrets' }
     return h
       .response({ meta: { success: true, messages: [] }, data: greetings })

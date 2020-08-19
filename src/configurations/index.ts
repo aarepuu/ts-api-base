@@ -1,4 +1,7 @@
+const pkg = require('../../package.json')
+
 export interface ServerConfigurations {
+  appName: string
   host: string
   port: number
   debugLogging: boolean
@@ -17,7 +20,7 @@ export interface ConnectorConfigurations {
   username: string
   password: string
   database: string
-  authController: string
+  authProvider: string
   poolMin: number
   poolMax: number
   poolIdle: number
@@ -26,11 +29,12 @@ export interface ConnectorConfigurations {
 const isDevMode = process.env.NODE_ENV === 'development'
 
 const server: ServerConfigurations = {
+  appName: pkg.name,
   host: process.env.HOST || '0.0.0.0',
   port: Number(process.env.PORT || 3000),
   debugLogging: isDevMode,
   plugins: String(process.env.PLUGINS || 'logger,jwt-auth').split(','),
-  routes: String(process.env.ROUTES || 'hello').split(','),
+  routes: String(process.env.ROUTES || 'hello,auth').split(','),
   jwtSecret: process.env.JWT_SECRET || 'never-share-secrets',
   jwtExpiration: process.env.JWT_EXP || '1h',
   routePrefix: process.env.ROUTE_PREFIX || '',
@@ -44,7 +48,7 @@ const connector: ConnectorConfigurations = {
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASS || 'postgres',
   database: process.env.DB_NAME || 'apidb',
-  authController: process.env.AUTH_CONTROLLER_PATH || 'auth',
+  authProvider: process.env.AUTH_PROVIDER_PATH || 'auth/auth-provider',
   poolMin: Number(process.env.DATABASE_POOL_MIN || '0'),
   poolMax: Number(process.env.DATABASE_POOL_MAX || '10'),
   poolIdle: Number(process.env.DATABASE_POOL_IDLE || '10000')

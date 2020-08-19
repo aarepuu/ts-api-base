@@ -47,25 +47,25 @@ Add your own API endpoints based on the [api/hello](src/api/hello) example accor
 
 The setup of the API is done using set of `.env` variables
 
-| Name                 | Usage                               |                                                       Values                                                       |
-| :------------------- | ----------------------------------- | :----------------------------------------------------------------------------------------------------------------: |
-| CONNECTOR            | The connector provider              |                                 `dummy`, `typeorm` or `knex`, defaults to `dummy`                                  |
-| HOST                 | The hostname of your application    |                                               defaults to `0.0.0.0`                                                |
-| PORT                 | The port number of your application |                                                 defaults to `3000`                                                 |
-| PLUGINS              | The list of plugins to load         |                                            comes with `logger,jwt-auth`                                            |
-| ROUTES               | The list of api endpoints to load   |                                                defaults to `hello`                                                 |
-| JWT_SECRET           | The secret key for JWT              |                                         defaults to `never-share-secrets`                                          |
-| JWT_EXP              | The expiry of JWT token             |                                                  defaults to `1h`                                                  |
-| ROUTE_PREFIX         | The prefix for api routes           |                                                   defaults to ``                                                   |
-| CLIENT               | The type of your database client    |                                              defaults to `localhost`                                               |
-| DB_HOST              | The username of your `database`     | see [typeORM](https://typeorm.io/#/undefined/creating-a-connection-to-the-database) and [knex](http://knexjs.org/) |
-| DB_USER              | The hostname of your `database`     |                                               defaults to `postgres`                                               |
-| DB_PASS              | The password of your `database`     |                                               defaults to `postgres`                                               |
-| DB_NAME              | The name of your `database`         |                                                defaults to `apidb`                                                 |
-| AUTH_CONTROLLER_PATH | The location of auth controller     |                                        defaults to `auth` (under api/auth)                                         |
-| DATABASE_POOL_MIN    | The min pool for your `database`    |                                                  defaults to `0`                                                   |
-| DATABASE_POOL_MAX    | The max pool for your `database`    |                                                  defaults to `10`                                                  |
-| DATABASE_POOL_IDLE   | The pool idle for your `database`   |                                                defaults to `10000`                                                 |
+| Name               | Usage                               |                                                       Values                                                       |
+| :----------------- | ----------------------------------- | :----------------------------------------------------------------------------------------------------------------: |
+| CONNECTOR          | The connector provider              |                                 `dummy`, `typeorm` or `knex`, defaults to `dummy`                                  |
+| HOST               | The hostname of your application    |                                               defaults to `0.0.0.0`                                                |
+| PORT               | The port number of your application |                                                 defaults to `3000`                                                 |
+| PLUGINS            | The list of plugins to load         |                                            comes with `logger,jwt-auth`                                            |
+| ROUTES             | The list of api endpoints to load   |                                                defaults to `hello`                                                 |
+| JWT_SECRET         | The secret key for JWT              |                                         defaults to `never-share-secrets`                                          |
+| JWT_EXP            | The expiry of JWT token             |                                                  defaults to `1h`                                                  |
+| ROUTE_PREFIX       | The prefix for api routes           |                                                   defaults to ``                                                   |
+| CLIENT             | The type of your database client    |                                              defaults to `localhost`                                               |
+| DB_HOST            | The username of your `database`     | see [typeORM](https://typeorm.io/#/undefined/creating-a-connection-to-the-database) and [knex](http://knexjs.org/) |
+| DB_USER            | The hostname of your `database`     |                                               defaults to `postgres`                                               |
+| DB_PASS            | The password of your `database`     |                                               defaults to `postgres`                                               |
+| DB_NAME            | The name of your `database`         |                                                defaults to `apidb`                                                 |
+| AUTH_PROVIDER_PATH | The location of auth provider       |                                 defaults to `auth/auth-provider` (under api/auth)                                  |
+| DATABASE_POOL_MIN  | The min pool for your `database`    |                                                  defaults to `0`                                                   |
+| DATABASE_POOL_MAX  | The max pool for your `database`    |                                                  defaults to `10`                                                  |
+| DATABASE_POOL_IDLE | The pool idle for your `database`   |                                                defaults to `10000`                                                 |
 
 ## TODOs/Ideas
 

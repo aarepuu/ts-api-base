@@ -1,42 +1,100 @@
-import { Request, ResponseToolkit } from '@hapi/hapi'
+import { ResponseToolkit } from '@hapi/hapi'
+import { unauthorized } from '@hapi/boom'
+import { UserModel } from './user-model'
+import { Connector } from '../../connector'
 import { ServerConfigurations } from '../../configurations'
-import { sign } from 'jsonwebtoken'
+import {
+  LoginRequest,
+  CustomRequest,
+  twofaRequest
+} from '../../interfaces/request'
 import { Auth } from '../../interfaces/auth'
-import User from './user-model'
+import AuthProvider from './auth-provider'
+import { authenticator } from '@otplib/preset-default'
+import qrcode from 'qrcode'
 
-// User database
-const users: User[] = [
-  new User({
-    id: 1,
-    name: 'Valid User',
-    email: 'email@email.com',
-    password: 'never-share-your-password'
-  })
-]
+export default class AuthController {
+  private connector: Connector
+  private configs: ServerConfigurations
+  private authProvider: Auth
 
-const validateUser = async (
-  decoded: any,
-  request: Request,
-  h: ResponseToolkit
-): Promise<{ isValid: Boolean }> => {
-  const user = users.find(i => i.id === decoded.id)
-  if (!user) {
-    return { isValid: false }
+  constructor(configs: ServerConfigurations, connector: Connector) {
+    this.connector = connector
+    this.configs = configs
+    // load custom auth provider
+    this.authProvider = AuthProvider()
   }
 
-  return { isValid: true }
-}
-
-const generateToken = (configs: ServerConfigurations): string => {
-  const jwtSecret = configs.jwtSecret
-  const jwtExpiration = configs.jwtExpiration
-  const payload = { id: users[0].id }
-  return sign(payload, jwtSecret, { expiresIn: jwtExpiration })
-}
-
-export default (): Auth => {
-  return {
-    validateUser,
-    generateToken
+  private generateQr(): Promise<string> {
+    const appName = this.configs.appName
+    const email = UserModel.getUser().email
+    const otpauth = authenticator.keyuri(
+      email,
+      appName,
+      UserModel.getUser().secret
+    )
+    return qrcode.toDataURL(otpauth)
   }
+  public async loginUser(request: LoginRequest, h: ResponseToolkit) {
+    const { email, password } = request.payload
+    // dummy database call
+    let user = UserModel.getUser(email)
+
+    if (!user) {
+      return unauthorized('User does not exists.')
+    }
+
+    if (!UserModel.validatePassword(password)) {
+      return unauthorized('Password is invalid.')
+    }
+
+    const token = this.authProvider.generateToken(this.configs, {
+      id: UserModel.getUser().id,
+      permission: 'ADMIN',
+      verified: false
+    })
+    if (!user.secret) {
+      const secret = authenticator.generateSecret()
+      UserModel.setSecret(secret)
+      const qr = await this.generateQr()
+      return h
+        .response({
+          qr,
+          secret,
+          status: { verified: false },
+          token
+        })
+        .code(206)
+    }
+    return h.response({ status: { verified: false }, token }).code(206)
+  }
+
+  public async refreshUser(request: CustomRequest, h: ResponseToolkit) {
+    const id = request.auth.credentials.id
+    // dummy database call
+    let user = UserModel.getUser(id)
+
+    if (!user) return unauthorized('User does not exists.')
+
+    // TODO: use status and expire to set cookie expiration
+    return { token: this.authProvider.generateToken(this.configs) }
+  }
+
+  public async verifyWith2fa(request: twofaRequest, h: ResponseToolkit) {
+    const session = request.auth.credentials
+    const id = session.id
+    // dummy database call
+    let user = UserModel.getUser(id)
+    if (!user) return unauthorized('User does not exists.')
+
+    const { code, rememberDevice } = request.payload
+    const valid = authenticator.check(code, UserModel.getUser().secret)
+    if (valid) {
+      session.verified = true
+      return { token: this.authProvider.generateToken(this.configs, session) }
+    }
+    return unauthorized('Token is invalid')
+  }
+
+  public async loginWithRecoveryCode(request: Request, h: ResponseToolkit) {}
 }
