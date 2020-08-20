@@ -60,6 +60,7 @@ The setup of the API is done using set of `.env` variables
 
 | Name               | Usage                               |                                                       Values                                                       |
 | :----------------- | ----------------------------------- | :----------------------------------------------------------------------------------------------------------------: |
+| APP_NAME           | Name of your application            |                                         defaults to name in `package.json`                                         |
 | CONNECTOR          | The connector provider              |                                 `dummy`, `typeorm` or `knex`, defaults to `dummy`                                  |
 | HOST               | The hostname of your application    |                                               defaults to `0.0.0.0`                                                |
 | PORT               | The port number of your application |                                                 defaults to `3000`                                                 |

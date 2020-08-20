@@ -29,7 +29,7 @@ export interface ConnectorConfigurations {
 const isDevMode = process.env.NODE_ENV === 'development'
 
 const server: ServerConfigurations = {
-  appName: pkg.name,
+  appName: process.env.APP_NAME || pkg.name,
   host: process.env.HOST || '0.0.0.0',
   port: Number(process.env.PORT || 3000),
   debugLogging: isDevMode,
