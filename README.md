@@ -47,11 +47,11 @@ Add your own API endpoints based on the [api/hello](src/api/hello) example accor
 
 Template also includes an example of 2FA leveraging [otplib](https://github.com/yeojz/otplib) that can be used with Google Authenticator application on phone or tablet.
 
-2FA adds additional parameter of `verified` to JWT token. When 2FA is successfully verified using a verification code from the app, JWT token is updated to `{verified: true}` that can be checked on restricted routes:
+2FA adds additional parameter of `verified` to encoded JWT token which can be set as default authenticator of routes. After login and when 2FA is successfully validated using a time limited one time verification code from the Authenticator app, JWT token property is updated to `{verified: true}`. The verified parameter is made available in credentials on the `request` as `request.auth.credentials.verified` which can be checked on restricted routes:
 
 ```js
 if (!request.auth.credentials.verified)
-  return unauthorized('Missing two-factor verification')
+  return Boom.unauthorized('Missing two-factor verification')
 ```
 
 ## Variables
@@ -84,3 +84,6 @@ The setup of the API is done using set of `.env` variables
 - implement more connector interfaces
 - auto generate API documentation
 - add API generation from `schema.json` file
+- build 2FA as hapi-plugin
+- add recovery codes to 2FA
+- add remember device to 2FA
