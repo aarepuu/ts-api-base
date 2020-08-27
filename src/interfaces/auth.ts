@@ -9,5 +9,5 @@ export interface Auth {
     user?: any,
     connector?: any
   ): Promise<{ isValid: Boolean }>
-  generateToken(configs: ServerConfigurations, session?: any): string
+  generateToken(configs: ServerConfigurations, payload?: any): string
 }
