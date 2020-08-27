@@ -1,5 +1,7 @@
 # A Typescript API Project
 
+> **Work in progress....**
+
 This project was setup with [aarepuu/ts-api-base](https://github.com/ts-api-base), which sets up [Hapi](https://hapi.dev/) server, inspired by [dwyl/hapi-typescript-example](https://github.com/dwyl/hapi-typescript-example), with useful plugins with choice of connector interfaces and other useful Typescript tools.
 
 ## Template Features
@@ -41,7 +43,9 @@ npm run coverage
 
 ## Usage/Extending
 
-Add your own API endpoints based on the [api/hello](src/api/hello) example according to the connector of choice. For JWT authentication you need to implement your own auth controller based on the [api/auth](src/api/auth) example according to the connector of choice (using `auth` interface). Template uses `dummy` connector and auth. See more about implementation of [typeorm](https://typeorm.io) and [knex](http://knexjs.org/).
+Template contains example implementation of API using `dummy` connector. Add your own API endpoints based on the [api/hello](src/api/hello) example according to the connector of choice. For JWT authentication you need to implement your own `auth provider` (see example [api/auth](src/api/auth)) according to the connector of choice and extending the `auth` interface.
+
+For connector implementation see more about [typeorm](https://typeorm.io) and [knex](http://knexjs.org/).
 
 ### 2FA Authentication
 
