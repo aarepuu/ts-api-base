@@ -35,6 +35,7 @@ export default class AuthController {
     )
     return qrcode.toDataURL(otpauth)
   }
+
   public async loginUser(request: LoginRequest, h: ResponseToolkit) {
     const { email, password } = request.payload
     // dummy database call
@@ -54,20 +55,19 @@ export default class AuthController {
       verified: false
     })
     if (!user.secret) {
-      const secret = authenticator.generateSecret()
-      UserModel.setSecret(secret)
-      const qr = await this.generateQr()
+      const key = authenticator.generateSecret()
+      UserModel.setSecret(key)
+      const uri = await this.generateQr()
       return h
         .response({
-          qr,
-          secret,
-          status: { verified: false },
+          uri,
+          key,
           token
         })
         .code(206)
     }
     // TODO: use status and expire to set cookie expiration
-    return h.response({ status: { verified: false }, token }).code(206)
+    return h.response({ token }).code(206)
   }
 
   public async refreshUser(request: CustomRequest, h: ResponseToolkit) {
@@ -89,7 +89,7 @@ export default class AuthController {
     if (!user) return unauthorized('User does not exists.')
 
     const { code, rememberDevice } = request.payload
-    const valid = authenticator.check(code, UserModel.getUser().secret)
+    const valid = authenticator.check(code, UserModel.getUser(user.id).secret)
     if (valid) {
       session.verified = true
       return { token: this.authProvider.generateToken(this.configs, session) }

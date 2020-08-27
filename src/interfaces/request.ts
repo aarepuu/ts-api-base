@@ -18,6 +18,7 @@ export interface LoginRequest extends CustomRequest {
   payload: {
     email: string
     password: string
+    rememberMe: boolean
   }
 }
 

@@ -45,6 +45,8 @@ Add your own API endpoints based on the [api/hello](src/api/hello) example accor
 
 ### 2FA Authentication
 
+> **DISCLAIMER!** Please note the code in the following example is not production ready and not battle tested.
+
 Template also includes an example of 2FA leveraging [otplib](https://github.com/yeojz/otplib) that can be used with Google Authenticator application on phone or tablet.
 
 2FA adds additional parameter of `verified` to encoded JWT token which can be set as default authenticator of routes. After login and when 2FA is successfully validated using a time limited one time verification code from the Authenticator app, JWT token property is updated to `{verified: true}`. The verified parameter is made available in credentials on the `request` as `request.auth.credentials.verified` which can be checked on restricted routes:
@@ -53,6 +55,8 @@ Template also includes an example of 2FA leveraging [otplib](https://github.com/
 if (!request.auth.credentials.verified)
   return Boom.unauthorized('Missing two-factor verification')
 ```
+
+> For more information see [JWT Spec](https://tools.ietf.org/html/rfc7519)
 
 ## Variables
 
@@ -78,6 +82,8 @@ The setup of the API is done using set of `.env` variables
 | DATABASE_POOL_MIN  | The min pool for your `database`    |                                                  defaults to `0`                                                   |
 | DATABASE_POOL_MAX  | The max pool for your `database`    |                                                  defaults to `10`                                                  |
 | DATABASE_POOL_IDLE | The pool idle for your `database`   |                                                defaults to `10000`                                                 |
+
+> Setup using [aarepuu/ts-node-base](https://github.com/ts-node-base)
 
 ## TODOs/Ideas
 

@@ -6,7 +6,8 @@ export const loginUserModel = Joi.object().keys({
     .required(),
   password: Joi.string()
     .trim()
-    .required()
+    .required(),
+  rememberMe: Joi.boolean()
 })
 
 export const twofaValidator = Joi.object({
