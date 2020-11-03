@@ -2,7 +2,7 @@
 
 > **Work in progress....**
 
-This project was setup with [aarepuu/ts-api-base](https://github.com/ts-api-base), which sets up [Hapi](https://hapi.dev/) server, inspired by [dwyl/hapi-typescript-example](https://github.com/dwyl/hapi-typescript-example), with useful plugins with choice of connector interfaces and other useful Typescript tools.
+This project was setup with [aarepuu/ts-api-base](https://github.com/aarepuu/ts-api-base), which sets up [Hapi](https://hapi.dev/) server (inspired by [dwyl/hapi-typescript-example](https://github.com/dwyl/hapi-typescript-example)) with useful plugins, choice of connector interfaces and other useful Typescript tools.
 
 ## Template Features
 
@@ -87,7 +87,7 @@ The setup of the API is done using set of `.env` variables
 | DATABASE_POOL_MAX  | The max pool for your `database`    |                                                               defaults to `10`                                                               |
 | DATABASE_POOL_IDLE | The pool idle for your `database`   |                                                             defaults to `10000`                                                              |
 
-> Setup using [aarepuu/ts-node-base](https://github.com/ts-node-base)
+> Setup using [aarepuu/ts-node-base](https://github.com/aarepuu/ts-node-base)
 
 ## TODOs/Ideas
 
