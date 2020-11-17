@@ -1,5 +1,5 @@
 # [0] A common base for any stage
-FROM node:10-alpine as base
+FROM node:12-alpine as base
 WORKDIR /app
 COPY ["package*.json", "tsconfig.json", "/app/"]
 
